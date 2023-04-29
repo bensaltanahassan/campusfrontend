@@ -1,0 +1,44 @@
+const [passw, setShowPassword] = useState({
+    password: "",
+    confirmPassword: "",
+    showNewPassword: false,
+    showConfirmPassword: false,
+  });
+
+  const handleMouseDownPassword = (event) => {
+    console.log("showpass ver 1");
+    event.preventDefault();
+  };
+  const handleClickShowPassword = () => {
+    setShowPassword({ ...passw, showNewPassword: !passw.showNewPassword });
+  };
+  const handleClickShowConfirmPassword = () => {
+    setShowPassword({
+      ...passw,
+      showConfirmPassword: !passw.showConfirmPassword,
+    });
+  };
+  const handleChange = (prop) => (event) => {
+    setShowPassword({ ...passw, [prop]: event.target.value });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
+
+   value={passw.password}
+          onChange={onInputChange}
+          onBlur={validateInput}
+          type={passw.showNewPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {passw.showNewPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
