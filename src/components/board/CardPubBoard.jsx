@@ -1,11 +1,15 @@
 import { Avatar, Box, Card, Icon, Stack, Typography } from "@mui/material";
-import Paper from "@mui/icons-material/StickyNote2Outlined";
 import { useNavigate } from "react-router-dom";
 import { formatDistanceToNow, isBefore, subDays } from "date-fns";
 import { fr } from "date-fns/locale";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { useState } from "react";
 import axios from "axios";
+
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import BuildIcon from "@mui/icons-material/Build";
+import ArticleIcon from "@mui/icons-material/Article";
 
 function CardPubBoard(props) {
   const navigate = useNavigate();
@@ -88,7 +92,15 @@ function CardPubBoard(props) {
               backgroundColor: "blueviolet",
             }}
           >
-            <Paper />
+            {file.type === "cours" ? (
+              <LocalLibraryIcon />
+            ) : file.type === "td" ? (
+              <AssignmentIcon />
+            ) : file.type === "tp" ? (
+              <BuildIcon />
+            ) : (
+              <ArticleIcon />
+            )}
           </Avatar>
           <Stack>
             <Typography

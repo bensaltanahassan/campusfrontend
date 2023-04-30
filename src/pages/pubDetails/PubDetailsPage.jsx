@@ -59,6 +59,7 @@ function PubDetailsPage() {
     onSuccess: (data) => {
       setTeacher(data.data.teacher);
       setPub(data.data.pub);
+
       setComment(data.data.pub.comments);
     },
     onError: (error) => {
@@ -69,6 +70,25 @@ function PubDetailsPage() {
   React.useEffect(() => {
     refetch();
   }, [refetch]);
+
+  const [formattedDate, setFormattedDate] = React.useState("");
+
+  React.useEffect(() => {
+    if (pub.createdAt) {
+      const date = new Date(pub.createdAt);
+      const now = new Date();
+      if (isBefore(date, subDays(now, 1))) {
+        setFormattedDate(date.toLocaleDateString("fr-FR"));
+      } else {
+        setFormattedDate(
+          formatDistanceToNow(date, {
+            addSuffix: true,
+            locale: fr,
+          })
+        );
+      }
+    }
+  }, [pub]);
 
   const [isDownloading, setIsDownloading] = useState(false);
   const handleClickDownload = async (event) => {
@@ -99,18 +119,6 @@ function PubDetailsPage() {
     }
   };
 
-  const date = new Date(pub.createdAt);
-  const now = new Date();
-  let formattedDate;
-
-  if (isBefore(date, subDays(now, 1))) {
-    formattedDate = date.toLocaleDateString("fr-FR");
-  } else {
-    formattedDate = formatDistanceToNow(date, {
-      addSuffix: true,
-      locale: fr,
-    });
-  }
   const { userType } = useSelector((state) => state.auth);
   if (isLoading) {
     return <LoadingPage />;

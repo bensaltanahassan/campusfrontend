@@ -42,7 +42,8 @@ function CustomTaskStudentNotAnswer(props) {
   });
 
   return (
-    student && (
+    student &&
+    task && (
       <Box>
         <SnackBar
           message={messageSnackBar}

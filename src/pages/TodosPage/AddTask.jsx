@@ -88,7 +88,10 @@ function AddTask(props) {
       setOpenSnackBar(true);
       return;
     }
-    if (data.debut > data.fin) {
+    const date1 = new Date(dayjs(data.debut).format("YYYY-MM-DD HH:mm:ss"));
+    const date2 = new Date(dayjs(data.fin).format("YYYY-MM-DD HH:mm:ss"));
+
+    if (date1.getTime() > date2.getTime()) {
       setMessageSnackBar(
         "La date de début doit être inférieur à la date de fin"
       );

@@ -10,7 +10,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { primaryColor } from "../../../utils/colors";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,7 +45,7 @@ function MyAppBar() {
       setFileName(user.imageUrl.substring(user.imageUrl.lastIndexOf("/") + 1));
       setFullUrl(baseUrl + fileName);
     }
-  }, [userType, fileName, baseUrl]);
+  }, [userType, fileName, baseUrl, fullUrl]);
 
   const isSmallScreen = useMediaQuery("(max-width:620px)");
 
