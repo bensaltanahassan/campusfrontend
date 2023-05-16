@@ -13,15 +13,20 @@ import CustomModalForStudentsStatistiques from "./CustomModalForStatistiques";
 function StatistiquesNotes(props) {
   const { max, min, avg } = props.marks;
 
-  const { studentLessThan7, studentsNotValidated, studentsValidated } =
+  const { studentLessThanElim, studentsNotValidated, studentsValidated } =
     props.students;
+
+  const module = props.module;
 
   const [openStuentNotValidated, setOpenStuentNotValidated] =
     React.useState(false);
   const [rowsStudentValidated, setRowsStudentValidated] = React.useState([]);
 
-  const [openStudentLessThan7, setOpenStudentLessThan7] = React.useState(false);
-  const [rowsStudentLessThan7, setRowsStudentLessThan7] = React.useState([]);
+  const [openStudentLessThanElim, setOpenStudentLessThanElim] =
+    React.useState(false);
+  const [rowsStudentLessThanElim, setRowsStudentLessThanElim] = React.useState(
+    []
+  );
 
   const [openStudentValidated, setOpenStudentValidated] = React.useState(false);
   const [rowsStudentNotValidated, setRowsStudentNotValidated] = React.useState(
@@ -42,8 +47,8 @@ function StatistiquesNotes(props) {
     setOpenStudentValidated(true);
   };
 
-  const handleOpenStudentLessThan7 = () => {
-    setOpenStudentLessThan7(true);
+  const handleOpenStudentLessThanElim = () => {
+    setOpenStudentLessThanElim(true);
   };
 
   const handleOpenStudentMaxNote = () => {
@@ -84,8 +89,8 @@ function StatistiquesNotes(props) {
   }, [studentsNotValidated]);
 
   React.useEffect(() => {
-    if (studentLessThan7) {
-      const rows = studentLessThan7.map((mark) => {
+    if (studentLessThanElim) {
+      const rows = studentLessThanElim.map((mark) => {
         return {
           id: mark._id,
           cne: mark.student.codeMassar,
@@ -93,9 +98,9 @@ function StatistiquesNotes(props) {
           note: mark.mark,
         };
       });
-      setRowsStudentLessThan7(rows);
+      setRowsStudentLessThanElim(rows);
     }
-  }, [studentLessThan7]);
+  }, [studentLessThanElim]);
 
   React.useEffect(() => {
     if (max) {
@@ -183,7 +188,11 @@ function StatistiquesNotes(props) {
           />
           <CustomCardApercu
             number={studentsNotValidated ? studentsNotValidated.length : 0}
-            text="Nombre de notes inférieures à 12"
+            text={
+              module.cycle === "préparatoire"
+                ? "Nombre de notes inférieures à 10"
+                : "Nombre de notes inférieures à 12"
+            }
             enabled={true}
             onClick={handleOpenStudentNotValidated}
             backgroundColor="#e9c46a"
@@ -193,11 +202,19 @@ function StatistiquesNotes(props) {
             open={openStuentNotValidated}
             setOpen={setOpenStuentNotValidated}
             rows={rowsStudentNotValidated}
-            title="Liste des étudiants ayant une note inférieure à 12"
+            title={
+              module.cycle === "préparatoire"
+                ? "Liste des étudiants ayant une note inférieure à 10"
+                : "Liste des étudiants ayant une note inférieure à 12"
+            }
           />
           <CustomCardApercu
             number={studentsValidated ? studentsValidated.length : 0}
-            text="Nombre de notes supérieures à 12"
+            text={
+              module.cycle === "préparatoire"
+                ? "Nombre de notes supérieures à 10"
+                : "Nombre de notes supérieures à 12"
+            }
             backgroundColor="#264653"
             enabled={true}
             onClick={handleOpenStudentValidated}
@@ -207,20 +224,24 @@ function StatistiquesNotes(props) {
             open={openStudentValidated}
             setOpen={setOpenStudentValidated}
             rows={rowsStudentValidated}
-            title="Liste des étudiants ayant une note supérieure à 12"
+            title={
+              module.cycle === "préparatoire"
+                ? "Liste des étudiants ayant une note supérieure à 10"
+                : "Liste des étudiants ayant une note supérieure à 12"
+            }
           />
           <CustomCardApercu
-            number={studentLessThan7 ? studentLessThan7.length : 0}
+            number={studentLessThanElim ? studentLessThanElim.length : 0}
             text="Nombre de notes eliminatoires"
             backgroundColor="#2a9d8f"
-            onClick={handleOpenStudentLessThan7}
+            onClick={handleOpenStudentLessThanElim}
             enabled={true}
             icon={<ThumbDownIcon />}
           />
           <CustomModalForStudentsStatistiques
-            open={openStudentLessThan7}
-            setOpen={setOpenStudentLessThan7}
-            rows={rowsStudentLessThan7}
+            open={openStudentLessThanElim}
+            setOpen={setOpenStudentLessThanElim}
+            rows={rowsStudentLessThanElim}
             title="Liste des étudiants ayant une note eleminatoire"
           />
         </Grid>

@@ -21,6 +21,7 @@ const createModules = async (
   classe,
   identifiant,
   color,
+  cycle,
   token
 ) => {
   return await axios.post(
@@ -30,6 +31,7 @@ const createModules = async (
       identifiant,
       name,
       classe,
+      cycle,
       color,
     },
     {

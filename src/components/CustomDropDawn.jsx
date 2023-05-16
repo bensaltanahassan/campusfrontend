@@ -12,7 +12,7 @@ import MenuList from "@mui/material/MenuList";
 export default function CustomDropDawn(props) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   // React.useEffect(() => {}, [props.option]);
 

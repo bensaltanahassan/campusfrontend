@@ -76,10 +76,11 @@ const verifyCode = async ({ verifyCode, _id, userType }) => {
   }
 };
 
-const resetPassword = async ({ newPassword, userType, id }) => {
+const resetPassword = async (newPassword, userType, id) => {
   if (userType === "Teacher") {
     return await axios.put(
-      "https://campusapi-gljq.onrender.com/teachers/changepassword",
+      `https://campusapi-gljq.onrender.com/teachers/changepassword`,
+
       {
         teacherId: id,
         password: newPassword,

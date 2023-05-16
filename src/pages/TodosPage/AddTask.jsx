@@ -26,6 +26,35 @@ import { addTask } from "../../redux/api/moduleApi";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import SnackBar from "../../components/SnackBar";
 
+function compareDates(date1, date2) {
+  var [day1, month1, year1] = date1.split("/");
+  var [day2, month2, year2] = date2.split("/");
+
+  // Rearrange the date string to YYYY/MM/DD format
+  var formattedDate1 = year1 + "/" + month1 + "/" + day1;
+  var formattedDate2 = year2 + "/" + month2 + "/" + day2;
+
+  // Create JavaScript Date objects
+  var jsDate1 = new Date(formattedDate1);
+  var jsDate2 = new Date(formattedDate2);
+
+  // Compare the dates
+  if (jsDate1 < jsDate2) {
+    return -1; // date1 is before date2
+  } else if (jsDate1 > jsDate2) {
+    return 1; // date1 is after date2
+  } else {
+    return 0; // date1 is equal to date2
+  }
+}
+
+// Example usage:
+var date1 = "15/05/2023";
+var date2 = "16/05/2023";
+
+var comparison = compareDates(date1, date2);
+console.log(comparison); // Output: -1 (date1 is before date2)
+
 function AddTask(props) {
   const { user } = useSelector((state) => state.auth);
   const { id: moduleId } = useParams();
@@ -88,10 +117,8 @@ function AddTask(props) {
       setOpenSnackBar(true);
       return;
     }
-    const date1 = new Date(dayjs(data.debut).format("YYYY-MM-DD HH:mm:ss"));
-    const date2 = new Date(dayjs(data.fin).format("YYYY-MM-DD HH:mm:ss"));
 
-    if (date1.getTime() > date2.getTime()) {
+    if (compareDates(data.debut, data.fin) === 1) {
       setMessageSnackBar(
         "La date de début doit être inférieur à la date de fin"
       );

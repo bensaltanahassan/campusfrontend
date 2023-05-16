@@ -38,6 +38,7 @@ function StatistiquePage() {
         <ApercuSection files={data.data.statistiques.files} />
         <StudentsStatistiques students={data.data.statistiques.students} />
         <StatistiquesNotes
+          module={data.data.module}
           marks={data.data.statistiques.marks}
           students={data.data.statistiques.students}
         />

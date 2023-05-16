@@ -1,4 +1,11 @@
-import { TextField, Box, Card, Stack, Typography } from "@mui/material";
+import {
+  TextField,
+  Box,
+  Card,
+  Stack,
+  Typography,
+  Divider,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { Form, Formik } from "formik";
@@ -37,9 +44,11 @@ const ChangePasswordPage = () => {
     confirmPassword: "",
   };
 
-  const { isLoading, mutate } = useMutation(resetPassword, {
+  const { isLoading, mutate } = useMutation({
+    mutationFn: (data) => {
+      resetPassword(data.newPassword, data.userType, data.id);
+    },
     mutationKey: "resetPassword",
-
     onSuccess: (data) => {
       navigate("/auth/login", { replace: true });
     },
@@ -90,7 +99,7 @@ const ChangePasswordPage = () => {
                 }}
               >
                 <Typography
-                  variant="h6"
+                  variant="h5"
                   sx={{
                     fontWeight: "bold",
                     color: "#000",
@@ -99,6 +108,11 @@ const ChangePasswordPage = () => {
                 >
                   Veuillez entrer votre nouveau mot de passe
                 </Typography>
+                <Divider
+                  sx={{
+                    width: "100%",
+                  }}
+                />
                 <TextField
                   label="Nouveau Mot de Passe"
                   type="password"

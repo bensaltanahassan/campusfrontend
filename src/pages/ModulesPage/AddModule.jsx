@@ -22,6 +22,7 @@ import SnackBar from "../../components/SnackBar";
 
 import AddIcon from "@mui/icons-material/Add";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import CustomDropDawn from "../../components/CustomDropDawn";
 
 const colors = [
   "#0096c7",
@@ -49,6 +50,7 @@ function AddModule(props) {
     name: "",
     identifiant: "",
     classe: "",
+    cycle: "préparatoire",
   });
 
   // generate random color
@@ -87,6 +89,7 @@ function AddModule(props) {
         values.classe,
         values.identifiant,
         randomColor(),
+        values.cycle,
         user.token
       );
     },
@@ -100,6 +103,7 @@ function AddModule(props) {
         name: "",
         identifiant: "",
         classe: "",
+        cycle: "Préparatoire",
       });
       props.refetch();
     },
@@ -198,24 +202,72 @@ function AddModule(props) {
               setValues({ ...values, name: handleChange.target.value });
             }}
           />
-          <TextField
-            margin="normal"
-            name="classe"
-            required
-            fullWidth
-            id="classe"
-            label="Classe"
-            autoFocus
-            error={values.classe.length < 3 && values.classe.length !== 0}
-            helperText={
-              values.classe.length < 3 && values.classe.length !== 0
-                ? "Le nom de la classe doit contenir au moins 3 caractères"
-                : ""
-            }
-            onChange={(handleChange) => {
-              setValues({ ...values, classe: handleChange.target.value });
+          <Stack
+            direction={{
+              xs: "column",
+              sm: "row",
             }}
-          />
+            spacing={{
+              xs: 1,
+              sm: 2,
+            }}
+            sx={{
+              justifyContent: "space-between",
+              alignItems: {
+                xs: "start",
+                sm: "center",
+              },
+            }}
+          >
+            <TextField
+              margin="normal"
+              name="classe"
+              required
+              fullWidth
+              id="classe"
+              label="Classe"
+              autoFocus
+              error={values.classe.length < 3 && values.classe.length !== 0}
+              helperText={
+                values.classe.length < 3 && values.classe.length !== 0
+                  ? "Le nom de la classe doit contenir au moins 3 caractères"
+                  : ""
+              }
+              onChange={(handleChange) => {
+                setValues({ ...values, classe: handleChange.target.value });
+              }}
+            />
+            <Stack
+              spacing={1}
+              direction="row"
+              sx={{
+                justifyContent: "space-between",
+                alignItems: {
+                  xs: "start",
+                  sm: "center",
+                },
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "text.secondary",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                }}
+              >
+                Cycle
+              </Typography>
+              <CustomDropDawn
+                options={["Préparatoire", "Ingénieur"]}
+                setOption={(option) => {
+                  setValues({ ...values, cycle: option });
+                }}
+                option={
+                  values.cycle === "Préparatoire" ? "Préparatoire" : "Ingénieur"
+                }
+              />
+            </Stack>
+          </Stack>
 
           <TextField
             label="Identifiant"
