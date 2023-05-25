@@ -32,7 +32,7 @@ function CardAddPubBoard(props) {
 
   const [file, setFile] = useState();
   const [content, setContent] = useState("");
-  let type = "td";
+  const [type, setType] = useState("cours");
 
   const { user, userType } = useSelector((state) => state.auth);
 
@@ -198,7 +198,7 @@ function CardAddPubBoard(props) {
                   <CustomDropDawn
                     options={["COURS", "TD", "EXAM", "TP"]}
                     setOption={(option) => {
-                      type = option;
+                      setType(option);
                       console.log(type);
                     }}
                     option={type}
