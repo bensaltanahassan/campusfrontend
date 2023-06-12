@@ -72,7 +72,7 @@ const registerSchemaStudent = yup.object().shape({
     ),
   verifyPassword: yup
     .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .oneOf([yup.ref("password"), null], "Mots de passe doivent se ressambler")
     .required("Obligatoire"),
 });
 
